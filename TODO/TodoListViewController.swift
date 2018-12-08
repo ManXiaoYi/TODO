@@ -10,12 +10,17 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
+    let defaults = UserDefaults.standard
+
     var itemArray = ["购买水杯", "吃药", "修改密码"]
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
+            itemArray = items
+        }
     }
 
     @IBAction func addButtonPressed(_ sender: Any) {
@@ -25,6 +30,7 @@ class TodoListViewController: UITableViewController {
         let alertAction = UIAlertAction(title: "添加项目", style: .default) { (action) in
             print(textField.text!)
             self.itemArray.append(textField.text!)
+            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             self.tableView.reloadData()
         }
         alertVC.addTextField { (alertTextField) in
