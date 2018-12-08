@@ -10,11 +10,29 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    let itemArray = ["购买水杯", "吃药", "修改密码"]
+    var itemArray = ["购买水杯", "吃药", "修改密码"]
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+    }
+
+    @IBAction func addButtonPressed(_ sender: Any) {
+        var textField = UITextField()
+
+        let alertVC = UIAlertController(title: "添加一个新的TODO项目", message: "", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "添加项目", style: .default) { (action) in
+            print(textField.text!)
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        alertVC.addTextField { (alertTextField) in
+            alertTextField.placeholder = "创建一个新项目......"
+            textField = alertTextField
+        }
+        alertVC.addAction(alertAction)
+        present(alertVC, animated: true, completion: nil)
 
     }
 
@@ -45,50 +63,5 @@ class TodoListViewController: UITableViewController {
         }
         print(indexPath.row)
     }
-
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-     }
-     */
-
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-
-    /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
 
 }
